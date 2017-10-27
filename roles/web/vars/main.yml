@@ -1,0 +1,4 @@
+---
+
+git_dest: /var/www/www.zoneminder.com/
+zm_webroot: "{{ git_dest }}_site"

@@ -61,7 +61,7 @@
 - name: Clone the site
   git:
           repo: https://github.com/ZoneMinder/zoneminder.github.io.git
-          dest: /var/www/www.zoneminder.com/
+          dest: "{{ git_dest }}"
           version: master
 
 - name: Install gems needed for jekyll
@@ -76,4 +76,4 @@
 - name: Build the site
   command: bundle exec jekyll build
   args:
-          chdir: /var/www/zoneminder.com
+          chdir: "{{ git_dest }}"
