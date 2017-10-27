@@ -1,0 +1,7 @@
+---
+
+- name: Configure server for serving static web sites
+  hosts: localhost
+  user: root
+  roles:
+          - web

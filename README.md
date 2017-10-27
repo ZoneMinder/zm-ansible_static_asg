@@ -1,0 +1,1 @@
+This playbook gets pulled down and executed automatically by ansible-pull.  It is responsible for configuring our static web servers (responsible for www., telemetry., and update.) in our autoscaling group in AWS.
