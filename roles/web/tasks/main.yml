@@ -72,6 +72,7 @@
   with_items:
           - jekyll
           - bundler
+          - html-proofer
 
 - name: Build the site
   command: bundle exec jekyll build
