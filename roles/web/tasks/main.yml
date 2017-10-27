@@ -31,7 +31,7 @@
 - name: enable nginx on boot
   service:
           name: nginx
-          state: enabled
+          enabled: yes
 
 - name: Copy over nginx site configs
   template:
