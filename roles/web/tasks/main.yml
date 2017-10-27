@@ -1,14 +1,5 @@
 ---
 
-- name: Copy over nginx configs
-  template:
-          src: "{{ item }}"
-          dest: "/etc/nginx/{{ item }}"
-  with_items:
-          - nginx.conf
-          - ssl-params.conf
-  notify: restart nginx
-
 - name: install packages
   apt:
           name: "{{ item }}"
@@ -21,6 +12,15 @@
           - ruby-dev
           - make
           - gcc
+
+- name: Copy over nginx configs
+  template:
+          src: "{{ item }}"
+          dest: "/etc/nginx/{{ item }}"
+  with_items:
+          - nginx.conf
+          - ssl-params.conf
+  notify: restart nginx
 
 - name: remove default nginx site
   file:
