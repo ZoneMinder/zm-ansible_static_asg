@@ -16,7 +16,11 @@
           update_cache: yes
           cache_valid_time: 3600
   with_items:
-    - nginx
+          - nginx
+          - ruby
+          - ruby-dev
+          - make
+          - gcc
 
 - name: remove default nginx site
   file:
@@ -30,7 +34,6 @@
           state: enabled
 
 - name: Copy over nginx site configs
-  template: src=www.zoneminder.com.conf dest=/etc/nginx/sites-enabled/www.zoneminder.com.conf
   template:
           src: "{{ item }}"
           dest: "/etc/nginx/sites-enabled/"
@@ -54,3 +57,23 @@
 
 - name: update.zoneminder.com cron job
   cron: name="version.txt" user="root"  minute="*/15" job='#wget -q https://raw.githubusercontent.com/ZoneMinder/ZoneMinder/master/version -O /var/www/update.zoneminder.com/version.txt && curl https://nosnch.in/bc25ce264b &> /dev/null'
+
+- name: Clone the site
+  git:
+          repo: https://github.com/ZoneMinder/zoneminder.github.io.git
+          dest: /var/www/www.zoneminder.com/
+          version: master
+
+- name: Install gems needed for jekyll
+  gem:
+          name: "{{ item }}"
+          state: present
+          user_install: no
+  with_items:
+          - jekyll
+          - bundler
+
+- name: Build the site
+  command: bundle exec jekyll build
+  args:
+          chdir: /var/www/zoneminder.com/zoneminder.github.io
