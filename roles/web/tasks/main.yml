@@ -76,4 +76,4 @@
 - name: Build the site
   command: bundle exec jekyll build
   args:
-          chdir: /var/www/zoneminder.com/zoneminder.github.io
+          chdir: /var/www/zoneminder.com
