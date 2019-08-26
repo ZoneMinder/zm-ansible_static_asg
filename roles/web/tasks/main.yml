@@ -17,13 +17,13 @@
   args:
     creates: /usr/local/rvm/bin/rvm
 
-- name: add {{extra_path}} to path
-  lineinfile:
-    dest: /etc/environment
-    state: present
-    backrefs: yes
-    regexp: 'PATH=(["]*)((?!.*?{{extra_path}}).*?)(["]*)$'
-    line: "PATH=\1\2:{{extra_path}}\3"
+- name: add ruby to path
+   lineinfile: >
+   dest=/etc/environment
+   state=present
+   backrefs=yes
+   regexp='PATH=(["]*)((?!.*?{{extra_path}}).*?)(["]*)$'
+   line="PATH=\1\2:{{extra_path}}\3"
 
 - name: Install ruby 2.6.3
   shell: "source /etc/profile.d/rvm.sh && rvm install 2.6.3"
