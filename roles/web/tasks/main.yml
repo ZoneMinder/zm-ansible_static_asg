@@ -5,7 +5,6 @@
   with_items:
     - curl -sSL https://rvm.io/mpapis.asc | gpg --import -
     - curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
-  warn: false
 
 - name: Get rvm install script
   get_url:
