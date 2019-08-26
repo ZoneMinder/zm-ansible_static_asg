@@ -2,7 +2,7 @@
 
 - name: Install RVM GPG key
   apt_key:
-    keyserver: keyserver.ubuntu.com
+    keyserver: pool.sks-keyservers.net
     id: "{{ item }}"
     state: present
   with_items:
