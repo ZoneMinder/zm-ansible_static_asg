@@ -5,6 +5,7 @@
   with_items:
     - curl -sSL https://rvm.io/mpapis.asc | gpg --import -
     - curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
+  warn: false
 
 - name: Get rvm install script
   get_url:
@@ -14,6 +15,8 @@
 
 - name: Install RVM
   command: /root/rvm.install.sh stable
+  args:
+    creates: /usr/local/rvm/bin/rvm
 
 - name: Install ruby 2.6
   shell: "source /etc/profile.d/rvm.sh && rvm install 2.6"
