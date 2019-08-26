@@ -2,3 +2,4 @@
 
 git_dest: /var/www/www.zoneminder.com/
 zm_webroot: "{{ git_dest }}_site"
+extra_path: /usr/local/rvm/rubies/ruby-2.6.3/bin
