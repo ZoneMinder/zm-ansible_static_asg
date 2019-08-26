@@ -29,15 +29,14 @@
 
 - name: install packages
   apt:
-          name: "{{ item }}"
+          name:
+            - nginx
+            - make
+            - gcc
           state: present
           update_cache: yes
           cache_valid_time: 3600
-  with_items:
-          - nginx
-          - make
-          - gcc
-
+  
 - name: Copy over nginx configs
   template:
           src: "{{ item }}"
