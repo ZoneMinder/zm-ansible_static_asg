@@ -17,9 +17,13 @@
 
 - name: Install ruby 2.6
   shell: "source /etc/profile.d/rvm.sh && rvm install 2.6"
+  args:
+    executable: /bin/bash
 
 - name: Set default ruby
   shell: "source /etc/profile.d/rvm.sh && rvm use 2.6 --default"
+  args:
+    executable: /bin/bash
 
 - name: install packages
   apt:
