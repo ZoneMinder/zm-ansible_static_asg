@@ -13,10 +13,10 @@
   command: /root/rvm.install.sh stable
 
 - name: Install ruby 2.6
-  command: rvm install 2.6
+  shell: "source /etc/profile.d/rvm.sh && rvm install 2.6"
 
 - name: Set default ruby
-  command: rvm use 2.6 --default
+  shell: "source /etc/profile.d/rvm.sh && rvm use 2.6 --default"
 
 - name: install packages
   apt:
