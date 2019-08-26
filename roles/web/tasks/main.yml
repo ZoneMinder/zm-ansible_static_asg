@@ -17,13 +17,13 @@
   args:
     creates: /usr/local/rvm/bin/rvm
 
-- name: Install ruby 2.6
-  shell: "source /etc/profile.d/rvm.sh && rvm install 2.6"
+- name: Install ruby 2.6.3
+  shell: "source /etc/profile.d/rvm.sh && rvm install 2.6.3"
   args:
     executable: /bin/bash
 
 - name: Set default ruby
-  shell: "source /etc/profile.d/rvm.sh && rvm use 2.6 --default"
+  shell: "source /etc/profile.d/rvm.sh && rvm use 2.6.3 --default"
   args:
     executable: /bin/bash
 
@@ -36,7 +36,7 @@
           state: present
           update_cache: yes
           cache_valid_time: 3600
-  
+
 - name: Copy over nginx configs
   template:
           src: "{{ item }}"
@@ -93,6 +93,7 @@
           name: "{{ item }}"
           state: present
           user_install: no
+          executable: /usr/local/rvm/rubies/ruby-2.6.3/bin/gem
   with_items:
           - jekyll
           - bundler
