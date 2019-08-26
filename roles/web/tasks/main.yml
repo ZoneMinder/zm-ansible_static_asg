@@ -1,5 +1,22 @@
 ---
 
+- name: Install RVM GPG key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id:
+      - 409B6B1796C275462A1703113804BB82D39DC0E3
+      - 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+    state: present
+
+- name: Install RVM
+  shell:  curl -sSL https://get.rvm.io | bash -s stable
+
+- name: Install ruby 2.6
+  command: rvm install 2.6
+
+- name: Set default ruby
+  command: rvm use 2.6 --default
+
 - name: install packages
   apt:
           name: "{{ item }}"
@@ -8,8 +25,6 @@
           cache_valid_time: 3600
   with_items:
           - nginx
-          - ruby
-          - ruby-dev
           - make
           - gcc
 
