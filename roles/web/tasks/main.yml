@@ -17,6 +17,9 @@
   args:
     creates: /usr/local/rvm/bin/rvm
 
+- name: Log back in to update environment with rvm
+  meta: reset_connection
+
 - name: Install ruby 2.6.3
   shell: "source /etc/profile.d/rvm.sh && rvm install 2.6.3"
   args:
