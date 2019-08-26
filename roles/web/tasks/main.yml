@@ -42,66 +42,73 @@
           src: "{{ item }}"
           dest: "/etc/nginx/{{ item }}"
   with_items:
-          - nginx.conf
-          - ssl-params.conf
+    - nginx.conf
+    - ssl-params.conf
   notify: restart nginx
 
 - name: remove default nginx site
   file:
-          path: /etc/nginx/sites-enabled/default
-          state: absent
+    path: /etc/nginx/sites-enabled/default
+    state: absent
   notify: restart nginx
 
 - name: enable nginx on boot
   service:
-          name: nginx
-          enabled: yes
+    name: nginx
+    enabled: yes
 
 - name: Copy over nginx site configs
   template:
-          src: "{{ item }}"
-          dest: "/etc/nginx/sites-enabled/"
+    src: "{{ item }}"
+    dest: "/etc/nginx/sites-enabled/"
   with_items:
-          - www.zoneminder.com.conf
-          - telemetry.zoneminder.com.conf
-          - update.zoneminder.com.conf
+    - www.zoneminder.com.conf
+    - telemetry.zoneminder.com.conf
+    - update.zoneminder.com.conf
   notify: restart nginx
   tags: web
 
 - name: Create webroots
   file:
-          path: "/var/www/{{ item }}"
-          state: directory
-          owner: www-data
-          group: www-data
+    path: "/var/www/{{ item }}"
+    state: directory
+    owner: www-data
+    group: www-data
   with_items:
-          - www.zoneminder.com
-          - update.zoneminder.com
-          - telemetry.zoneminder.com
+    - www.zoneminder.com
+    - update.zoneminder.com
+    - telemetry.zoneminder.com
 
 - name: update.zoneminder.com cron job
-  cron: name="version.txt" user="root"  minute="*/15" job='#wget -q https://raw.githubusercontent.com/ZoneMinder/ZoneMinder/master/version -O /var/www/update.zoneminder.com/version.txt && curl https://nosnch.in/bc25ce264b &> /dev/null'
+  cron:
+    user: root
+    name: "version.txt"
+    minute: "*/15"
+    job: "wget -q https://raw.githubusercontent.com/ZoneMinder/ZoneMinder/master/version -O /var/www/update.zoneminder.com/version.txt && curl https://nosnch.in/bc25ce264b &> /dev/null"
+    state: absent
 
 - name: Clone the site
   git:
-          repo: https://github.com/ZoneMinder/zoneminder.github.io.git
-          dest: "{{ git_dest }}"
-          version: master
+    repo: https://github.com/ZoneMinder/zoneminder.github.io.git
+    dest: "{{ git_dest }}"
+    version: master
 
 - name: Install gems needed for jekyll
   gem:
-          name: "{{ item }}"
-          state: present
-          user_install: no
-          executable: /usr/local/rvm/rubies/ruby-2.6.3/bin/gem
+    name: "{{ item }}"
+    state: present
+    user_install: no
+    executable: /usr/local/rvm/rubies/ruby-2.6.3/bin/gem
   with_items:
-          - jekyll
-          - bundler
-          - html-proofer
+    - jekyll
+    - bundler
+    - html-proofer
   environment:
     PATH: "{{ ansible_env.PATH }}:{{ ruby_path }}"
 
 - name: Build the site
   command: bundle exec jekyll build
   args:
-          chdir: "{{ git_dest }}"
+    chdir: "{{ git_dest }}"
+  environment:
+    PATH: "{{ ansible_env.PATH }}:{{ ruby_path }}"
