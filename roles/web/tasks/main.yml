@@ -99,7 +99,7 @@
           - bundler
           - html-proofer
   environment:
-    PATH:$PATH:{{ruby_path}}
+    PATH: "{{ ansible_env.PATH }}:{{ ruby_path }}"
 
 - name: Build the site
   command: bundle exec jekyll build
