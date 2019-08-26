@@ -16,7 +16,7 @@
     mode: 0550
 
 - name: Install RVM
-  command: /root/rvm.install.sh -s stable
+  command: /root/rvm.install.sh stable
 
 - name: Install ruby 2.6
   command: rvm install 2.6
